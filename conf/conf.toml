@@ -1,0 +1,26 @@
+NAME = "golang"
+PORT = 8080
+HOST = "0.0.0.0"
+LOG = "./zap.log"
+
+
+[MYSQL]
+HOST = "127.0.0.1"
+PORT = 3306
+USER= "root"
+PASSWORD = "123456"
+DATABASE = "chat"
+TABLEPREFIX = "chat_"
+
+[REDIS]
+HOST = "127.0.0.1"
+PORT = 6379
+PASSWORD = ""
+DB = 0
+
+[JWT]
+JWT_IN_COOKIE = "token"
+JWT_IN_HEADER = "token"
+JWT_IN_QUERY = "token"
+SECRET = "will"
+DURATION = 7200
