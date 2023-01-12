@@ -2,7 +2,14 @@
 
 ## 项目介绍
 
-gin + gorm+ viper + casbin
+|      包          |      释义      |
+| :-------------: | :---: |
+|     gin         | web   |
+|     gorm        | 数据库 |
+|     zap         | 日志   |
+|     viper       | 配置  |
+|     jwt         | 认证  |
+|     casbin      | 权限  |
 
 ## 项目结构
 
