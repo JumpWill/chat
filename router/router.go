@@ -6,6 +6,7 @@ import (
 )
 
 func Router(e *gin.Engine) {
+	// add your router 
 	routers := []func(*gin.RouterGroup){
 		v1.DeploymentRouter,
 		v1.NamespaceRouter,

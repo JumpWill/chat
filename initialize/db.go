@@ -36,8 +36,6 @@ func initData(db *gorm.DB) {
 
 	utils.Logger(constant.Info, map[string]string{"mes": "data init"})
 
-	// TODO 更友好的方式进行数据初始化
-
 	now := time.Now()
 
 	db.Where(models.Group{Name: "will"}).FirstOrCreate(&models.Group{

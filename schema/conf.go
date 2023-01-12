@@ -28,8 +28,8 @@ type RedisConfig struct {
 }
 
 type JwtConfig struct {
-	Cookie string `mapstructure:"jwt_in_cookie"`
-	Header string `mapstructure:"jwt_in_header"`
-	Query  string `mapstructure:"jwt_in_query"`
+	AccessToken string `mapstructure:"accesstoken"`
+	RefreshToekn string `mapstructure:"refreshtoken"`
+	Duration  string `mapstructure:"duration"`
 	Secret string `mapstructure:"secret"`
 }

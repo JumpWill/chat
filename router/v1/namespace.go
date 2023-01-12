@@ -1,39 +1,28 @@
 package v1
 
 import (
-	"fmt"
-	"net/http"
-
+	. "chat/utils"
 	"github.com/gin-gonic/gin"
 )
 
 func namespaceGet(c *gin.Context) {
-	fmt.Println("xxx")
-	c.JSON(http.StatusOK, gin.H{
-		"code":    200,
-		"message": "get",
-	})
+	Response(c, 200, "操作成功!", nil)
+
 }
 
 func namespacePost(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"code":    200,
-		"message": "post",
-	})
+	Response(c, 200, "操作成功!", "hah")
+
 }
 
 func namespacePut(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"code":    200,
-		"message": "put",
-	})
+	Response(c, 200, "操作成功!", "hah")
+
 }
 
 func namespaceDelete(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"code":    200,
-		"message": "delete",
-	})
+	Response(c, 200, "操作成功!", "hah")
+
 }
 
 func NamespaceRouter(api *gin.RouterGroup) {

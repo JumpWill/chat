@@ -26,6 +26,7 @@ func Logger(level constant.LogLevel, maps map[string]string) {
 		step++
 	}
 	// 为了保证日志的一致，所以将map排了序，也可以使用有序字典 待测试
+	// 可能需要测试一下排序和非排序的耗时情况
 	sort.Strings(keys)
 
 	for index, value := range keys {
