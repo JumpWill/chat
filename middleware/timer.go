@@ -14,13 +14,13 @@ func TimerMid(c *gin.Context) {
 	c.Next()
 
 	utils.Logger(constant.Info, map[string]string{
-		"status": fmt.Sprint(c.Writer.Status()),
-		"method": c.Request.Method,
-		"path":   c.Request.URL.Path,
-		"ip":     c.ClientIP(),
-		"ua":     c.Request.UserAgent(),
-		"time":   fmt.Sprint(time.Duration(time.Since(start).Microseconds())),
-		"error":  c.Errors.ByType(gin.ErrorTypePrivate).String(),
+		"Code":   fmt.Sprint(c.Writer.Status()),
+		"Method": c.Request.Method,
+		"Path":   c.Request.URL.Path,
+		"IP":     c.ClientIP(),
+		"UA":     c.Request.UserAgent(),
+		"Time":   fmt.Sprint(time.Duration(time.Since(start).Microseconds())),
+		"Error":  c.Errors.ByType(gin.ErrorTypePrivate).String(),
 	})
 
 }

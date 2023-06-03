@@ -1,10 +1,13 @@
 package utils
 
 import (
+	"chat/global"
+
 	"chat/schema"
 	"errors"
-	"github.com/golang-jwt/jwt/v4"
 	"time"
+
+	"github.com/golang-jwt/jwt/v4"
 )
 
 func Secret(secret []byte) jwt.Keyfunc {
@@ -14,42 +17,46 @@ func Secret(secret []byte) jwt.Keyfunc {
 }
 
 func JwtEncoder(user_id string, role string) (string, error) {
-	// TODO 整理
-	secret := "string"
+	secret := global.Settings.Jwt.Secret
 	claim := schema.Jwt{
+		// TODO Payload
 		UserId: user_id,
 		Role:   role,
 		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(3 * time.Hour * time.Duration(1))), // 过期时间3小时
-			IssuedAt:  jwt.NewNumericDate(time.Now()),                                       // 签发时间
-			NotBefore: jwt.NewNumericDate(time.Now()),                                       // 生效时间
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Duration(global.Settings.Jwt.Duration) * time.Hour)), // 过期时间3小时
+			IssuedAt:  jwt.NewNumericDate(time.Now()),                                                              // 签发时间
+			NotBefore: jwt.NewNumericDate(time.Now()),                                                              // 生效时间
 		}}
-	cli := jwt.NewWithClaims(jwt.SigningMethodHS256, claim) // 使用HS256算法
+	cli := jwt.NewWithClaims(jwt.SigningMethodHS256, claim)
 	token, err := cli.SignedString([]byte(secret))
-	if err != nil {
-		return "", err
-	}
+	Error(err, "Sign JWT token error!")
 	return token, nil
 
 }
 
 func JwtDecoder(token string) (*schema.Jwt, error) {
 
-	token2, err := jwt.ParseWithClaims(token, &schema.Jwt{}, Secret([]byte("string")))
-	// TODO 优化
+	data, err := jwt.ParseWithClaims(token, &schema.Jwt{}, Secret([]byte("string")))
+	info := ""
 	if err != nil {
 		if ve, ok := err.(*jwt.ValidationError); ok {
 			if ve.Errors&jwt.ValidationErrorMalformed != 0 {
-				return nil, errors.New("invalid token")
+				err = errors.New("invalid token")
+				info = "Invalid token"
 			} else if ve.Errors&jwt.ValidationErrorExpired != 0 {
-				return nil, errors.New("token has been expired")
+				err = errors.New("token has been expired")
+				info = "Token has been expired"
 			} else if ve.Errors&jwt.ValidationErrorNotValidYet != 0 {
-				return nil, errors.New("token has not")
+				err = errors.New("token has not")
+				info = "Token not active yet"
 			} else {
-				return nil, errors.New("couldn't parse token")
+				err = errors.New("couldn't parse token")
+				info = "Couldn't parse token"
 			}
 		}
 	}
-	claims, _ := token2.Claims.(*schema.Jwt)
+
+	Error(err, info)
+	claims, _ := data.Claims.(*schema.Jwt)
 	return claims, nil
 }

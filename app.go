@@ -19,7 +19,7 @@ func main() {
 
 	r := gin.New()
 	// add middleware
-	r.Use(middleware.AuthMid,middleware.TimerMid, gin.Recovery())
+	r.Use(middleware.TimerMid, middleware.AuthMid, gin.Recovery())
 	// init router
 	initialize.InitRouter(r)
 

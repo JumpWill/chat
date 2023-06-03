@@ -1,4 +1,4 @@
-package v1
+package v2
 
 import (
 	utils "chat/utils"
@@ -28,7 +28,7 @@ func namespaceDelete(c *gin.Context) {
 
 func NamespaceRouter(api *gin.RouterGroup) {
 
-	v1 := api.Group("/v1/ns")
+	v1 := api.Group("/v2/ns")
 	{
 		v1.GET("", namespaceGet)
 		v1.POST("", namespacePost)

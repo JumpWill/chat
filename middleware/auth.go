@@ -1,31 +1,32 @@
 package middleware
 
 import (
+	utils "chat/utils"
+
 	"chat/global"
-	"fmt"
+
 	"github.com/gin-gonic/gin"
 )
 
 func AuthMid(c *gin.Context) {
-	token_in_header := c.Request.Header.Get(global.Settings.Jwt.Header)
-	token_in_query := c.Query(global.Settings.Jwt.Query)
-	token_in_cookie, _ := c.Cookie(global.Settings.Jwt.Cookie)
-	var token string
-	switch {
-	case token_in_header != "":
-		token = token_in_header
-	case token_in_query != "":
-		token = token_in_query
-	case token_in_cookie != "":
-		token = token_in_cookie
-	default:
-		{
-			// TODO 定义全局返回
-			// c.Abort()
-		}
-	}
-	// TODO 集成casbin,完成权限鉴定
-	fmt.Println("token is", token)
-	c.Next()
+	// TODO 这样写不太好
+	path := c.Request.URL.Path
+	if path == "/api/v1/auth" {
 
+	} else {
+		token_in_header := c.Request.Header.Get(global.Settings.Jwt.AccessToken)
+		token_in_cookie, _ := c.Cookie(global.Settings.Jwt.AccessToken)
+		token := ""
+		if token_in_header != "" {
+			token = token_in_header
+		} else if token_in_cookie != "" {
+			token = token_in_cookie
+		}
+		if token == "" {
+			utils.Response(c, 403, "请先完成认证!", nil)
+			c.Abort()
+		}
+
+	}
+	c.Next()
 }

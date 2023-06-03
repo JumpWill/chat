@@ -23,13 +23,12 @@ type RedisConfig struct {
 	Host     string `mapstructure:"host"`
 	Port     int    `mapstructure:"port"`
 	Password string `mapstructure:"password"`
-	DB int `mapstructure:"db"`
-
+	DB       int    `mapstructure:"db"`
 }
 
 type JwtConfig struct {
-	AccessToken string `mapstructure:"accesstoken"`
+	AccessToken  string `mapstructure:"accesstoken"`
 	RefreshToekn string `mapstructure:"refreshtoken"`
-	Duration  string `mapstructure:"duration"`
-	Secret string `mapstructure:"secret"`
+	Duration     int    `mapstructure:"duration"`
+	Secret       string `mapstructure:"secret"`
 }

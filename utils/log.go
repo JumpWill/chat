@@ -4,9 +4,10 @@ import (
 	"chat/constant"
 	"chat/global"
 	"fmt"
-	"go.uber.org/zap/zapcore"
 	"runtime"
 	"sort"
+
+	"go.uber.org/zap/zapcore"
 )
 
 func getCaller(level int) string {
