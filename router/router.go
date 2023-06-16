@@ -20,8 +20,8 @@ func Router(e *gin.Engine) {
 
 	api := e.Group("/api")
 	{
-		for _, add := range routers {
-			add(api)
+		for _, router := range routers {
+			router(api)
 		}
 	}
 
