@@ -8,7 +8,8 @@ import (
 )
 
 func deploymentGet(c *gin.Context) {
-	fmt.Println("hhha")
+	username, _ := c.Get("username")
+	fmt.Println(username)
 	utils.Response(c, 200, "操作成功!", "")
 }
 

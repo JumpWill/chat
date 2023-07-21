@@ -13,3 +13,8 @@ func Response(c *gin.Context, code int, msg string, data interface{}) {
 	})
 
 }
+
+func ResponseWithError(c *gin.Context, code int, err error) {
+
+	c.AbortWithError(code, err)
+}

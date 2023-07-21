@@ -11,6 +11,9 @@ const (
 
 type LogLevel int8
 
+type ResponseCode int
+
+// Log Level
 const (
 	Debug LogLevel = iota - 1
 	Info
@@ -19,4 +22,13 @@ const (
 	DPanic
 	Panic
 	Fatal
+)
+
+// Response Code
+const (
+	Success ResponseCode = 200
+
+	Not_Found = 404
+	UnAuth
+	UnKnown = 500
 )

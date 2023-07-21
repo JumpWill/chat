@@ -5,7 +5,7 @@ LOG = "./zap.log"
 
 
 [MYSQL]
-HOST = "127.0.0.1"
+HOST = "10.24.100.111"
 PORT = 3306
 USER= "root"
 PASSWORD = "123456"
@@ -13,7 +13,7 @@ DATABASE = "chat"
 TABLEPREFIX = "chat_"
 
 [REDIS]
-HOST = "127.0.0.1"
+HOST = "10.24.100.111"
 PORT = 6379
 PASSWORD = ""
 DB = 0

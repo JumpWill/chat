@@ -27,8 +27,8 @@ type RedisConfig struct {
 }
 
 type JwtConfig struct {
-	AccessToken  string `mapstructure:"accesstoken"`
-	RefreshToekn string `mapstructure:"refreshtoken"`
+	AccessToken  string `mapstructure:"AccessToken"`
+	RefreshToekn string `mapstructure:"RefreshToken"`
 	Duration     int    `mapstructure:"duration"`
 	Secret       string `mapstructure:"secret"`
 }

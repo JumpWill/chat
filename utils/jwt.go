@@ -1,9 +1,9 @@
 package utils
 
 import (
-	"chat/global"
+	global "chat/global"
+	schema "chat/schema"
 
-	"chat/schema"
 	"errors"
 	"time"
 
@@ -16,19 +16,16 @@ func Secret(secret []byte) jwt.Keyfunc {
 	}
 }
 
-func JwtEncoder(user_id string, role string) (string, error) {
-	secret := global.Settings.Jwt.Secret
+func JwtEncoder(payload schema.Payload) (string, error) {
 	claim := schema.Jwt{
-		// TODO Payload
-		UserId: user_id,
-		Role:   role,
+		Payload: payload,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Duration(global.Settings.Jwt.Duration) * time.Hour)), // 过期时间3小时
 			IssuedAt:  jwt.NewNumericDate(time.Now()),                                                              // 签发时间
 			NotBefore: jwt.NewNumericDate(time.Now()),                                                              // 生效时间
 		}}
 	cli := jwt.NewWithClaims(jwt.SigningMethodHS256, claim)
-	token, err := cli.SignedString([]byte(secret))
+	token, err := cli.SignedString([]byte(global.Settings.Jwt.Secret))
 	Error(err, "Sign JWT token error!")
 	return token, nil
 
@@ -36,27 +33,22 @@ func JwtEncoder(user_id string, role string) (string, error) {
 
 func JwtDecoder(token string) (*schema.Jwt, error) {
 
-	data, err := jwt.ParseWithClaims(token, &schema.Jwt{}, Secret([]byte("string")))
-	info := ""
+	data, err := jwt.ParseWithClaims(token, &schema.Jwt{}, Secret([]byte(global.Settings.Jwt.Secret)))
+
 	if err != nil {
 		if ve, ok := err.(*jwt.ValidationError); ok {
 			if ve.Errors&jwt.ValidationErrorMalformed != 0 {
-				err = errors.New("invalid token")
-				info = "Invalid token"
+				err = errors.New("Token非法认证")
 			} else if ve.Errors&jwt.ValidationErrorExpired != 0 {
-				err = errors.New("token has been expired")
-				info = "Token has been expired"
+				err = errors.New("Token已经过期")
 			} else if ve.Errors&jwt.ValidationErrorNotValidYet != 0 {
-				err = errors.New("token has not")
-				info = "Token not active yet"
+				err = errors.New("Token未被激活")
 			} else {
-				err = errors.New("couldn't parse token")
-				info = "Couldn't parse token"
+				err = errors.New("Token无法解析")
 			}
 		}
+		return nil, err
 	}
-
-	Error(err, info)
 	claims, _ := data.Claims.(*schema.Jwt)
 	return claims, nil
 }

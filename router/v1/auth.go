@@ -9,7 +9,13 @@ import (
 
 func authGet(c *gin.Context) {
 
-	access_token, _ := utils.JwtEncoder("xxxx", "paa")
+	payload := schema.Payload{
+		Name:   "hjy",
+		UserID: "111",
+		Role:   "die",
+	}
+
+	access_token, _ := utils.JwtEncoder(payload)
 	token := schema.Token{
 		RefreshToken: access_token,
 		AccessToken:  access_token,
@@ -20,12 +26,12 @@ func authGet(c *gin.Context) {
 
 func authPost(c *gin.Context) {
 
-	access_token, _ := utils.JwtEncoder("xxxx", "paa")
-	token := schema.Token{
-		RefreshToken: access_token,
-		AccessToken:  access_token,
-	}
-	utils.Response(c, 200, "操作成功!", token)
+	// access_token, _ := utils.JwtEncoder("xxxx", "paa")
+	// token := schema.Token{
+	// 	RefreshToken: access_token,
+	// 	AccessToken:  access_token,
+	// }
+	utils.Response(c, 200, "操作成功!", "token")
 
 }
 
