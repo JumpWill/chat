@@ -48,7 +48,7 @@ func initData(db *gorm.DB) {
 		Sex:            true,
 		Bir:            now,
 		Img:            "www.baidu.com",
-		Phone:          "15615521160",
+		Phone:          "11111111111",
 		UserID:         "will",
 		RegisteredTime: now,
 		LoginTime:      now,

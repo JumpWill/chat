@@ -26,9 +26,8 @@ const (
 
 // Response Code
 const (
-	Success ResponseCode = 200
-
-	Not_Found = 404
-	UnAuth
-	UnKnown = 500
+	Success   ResponseCode = 200
+	UnAuth                 = 403
+	Not_Found              = 404
+	UnKnown                = 500
 )
